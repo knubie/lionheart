@@ -33,11 +33,11 @@ function love.draw()
 	char.p1:draw()
 
 	local cur_time = love.timer.getMicroTime()
-   if next_time <= cur_time then
-      next_time = cur_time
-      return
-   end
-   love.timer.sleep(1000*(next_time - cur_time))
+	 if next_time <= cur_time then
+			next_time = cur_time
+			return
+	 end
+	 love.timer.sleep(1000*(next_time - cur_time))
 end
 
 function love.keypressed(key)
