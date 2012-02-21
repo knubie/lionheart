@@ -17,10 +17,12 @@ function new (class)
 		walk_v = 5,
 		x = 100,
 		y = 0,
-		up = "up",
-		down = "down",
-		left = "left",
-		right = "right",
+		controls = {
+			up = "up",
+			down = "down",
+			left = "left",
+			right = "right"
+		},
 		state = "idle",
 		facing = "right",
 		frame = 1,
