@@ -1,43 +1,40 @@
 module(...,package.seeall)
 require('races')
+require('actions')
 
 GROUND = 650
 
 function new (class)
-	char = {
-		hp = 100,
-		attack = 100,
-		defense = 100,
-		str = 6,
-		dex = 6,
-		vit = 6,
-		agi = 6,
-		int = 6,
-		mnd = 6,
-		walk_v = 5,
+	local char = {
+		walkf_v = 4,
+		walkb_v = -3,
 		x = 100,
 		y = 0,
-		controls = {
+		controls = { -- Keyboard/joystick controls
 			up = "up",
 			down = "down",
 			left = "left",
 			right = "right"
 		},
-		state = "idle",
+		state = "idle", -- Animation state
 		facing = "right",
 		frame = 1,
 		class = class
 	}
 
-	local state = class[char.state]
-
 	function char:draw ()
+		-- Create local reference to the character state
 		local state = class[self.state]
+
 		local quad = love.graphics.newQuad(
-			state.w * (self.frame-1), 0,
+			-- X, Y
+			state.w * (self.frame-1), 0, -- Move to the correct frame on the animation sheet.
+			-- W, H
 			state.w, state.h,
+			-- Image W, H
 			state.img:getWidth(), state.img:getHeight()
 		)
+		-- Determine whether to flip the image or not.
 		if self.facing == "left" then
 			quad:flip(true, false)
 			love.graphics.drawq(state.img, quad, self.x-state.w+state.c.x, GROUND-state.h+self.y)
@@ -47,27 +44,57 @@ function new (class)
 	end
 
 	function char:movex(v)
-		if self.x-state.c.x > 0 and self.x-state.c.x+state.w < 650 then
-			if self.x-state.c.x+v > 0 and self.x-state.c.x+state.w+v < 650 then
+		-- Create local reference to the character state
+		local state = class[self.state]
+
+		if self.x-state.c.x > 0 and self.x-state.c.x+state.w < GROUND then
+			if self.x-state.c.x+v > 0 and self.x-state.c.x+state.w+v < GROUND then
 				self.x = self.x+v
 			end
 		end
 	end
 
 	function char:walk(direction)
-		local walk = ""
 		if direction == "F" then
-			walk = "walk_f"
+			self:set_state("walk_f")
 		else
-			walk = "walk_b"
+			self:set_state("walk_b")
 		end
 
-		self:set_state(walk)
+		if (direction == "F" and self.facing == "right") then
+			self:movex(self.walkf_v)
+		elseif (direction == "B" and self.facing == "right") then
+			self:movex(self.walkb_v)
+		end
+	end
 
-		if (direction == "F" and self.facing == "right") or (direction == "B" and self.facing == "left") then
-			self:movex(self.walk_v)
+	function char:crouch ()
+		if self.state == "crouch_outro" then
+			if self.frame == 2 then
+				self:set_state("crouch_intro")
+				self.frame = 2
+			elseif frame == 1 then
+				self:set_state("crouch_loop")
+			else
+				self:set_state("crouch_intro")
+			end
 		else
-			self:movex(0-self.walk_v)
+			self:set_state("crouch_intro")
+		end
+	end
+
+	function char:stand()
+		if self.state == "crouch_intro" then
+			if self.frame == 2 then
+				self:set_state("crouch_outro")
+				self.frame = 2
+			elseif frame == 1 then
+				self:set_state("idle")
+			else
+				self:set_state("crouch_outro")
+			end
+		else
+			self:set_state("crouch_outro")
 		end
 	end
 
@@ -76,6 +103,10 @@ function new (class)
 			self.frame = 1
 			self.state = state_name
 		end
+	end
+
+	function char:update ()
+		actions.update(self)
 	end
 
 	return char

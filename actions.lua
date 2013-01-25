@@ -2,10 +2,10 @@ module(..., package.seeall)
 require('controls')
 require('animation')
 
+-- Checks user input and calls appropriate action method.
 function update (char)
 
-
-
+	-- Checks player input and assigns bolean values to the variables.
 	if char.facing == "right" then
 		B, UB, DB, F, UF, DF, U, D = controls.set(char)
 	else
@@ -25,13 +25,13 @@ function update (char)
 		elseif F then
 			char:walk("F")
 		elseif DF then
-			-- sprite:crouch()
+			char:crouch()
 		elseif D then
-			-- sprite:crouch()
+			char:crouch()
 		elseif DB then
-			-- sprite:crouch()
+			char:crouch()
 		elseif B then
-			-- sprite:walk("left")
+			char:walk("B")
 		elseif UB then
 			-- sprite:init_jump("left")
 		elseif jabb then
@@ -52,18 +52,137 @@ function update (char)
 			char:walk("F")
 		elseif DF then
 			-- sprite:crouch()
+			char:crouch()
 		elseif D then
 			-- sprite:crouch()
+			char:crouch()
 		elseif DB then
 			-- sprite:crouch()
+			char:crouch()
 		elseif B then
-			-- sprite:walk("left")
+			char:walk("B")
 		elseif UB then
 			-- sprite:init_jump("left")
 		elseif jabb then
 			-- jab(sprite, "standing")
 		else
 			char:set_state("idle")
+		end
+
+		-- ANIMATION
+		animation.loop(char)
+
+	elseif char.state == "walk_b" then
+
+		-- INPUTS
+		if U then
+			-- sprite:init_jump("neutral")
+		elseif UF then
+			-- sprite:init_jump("right")
+		elseif F then
+			char:walk("F")
+		elseif DF then
+			-- sprite:crouch()
+			char:crouch()
+		elseif D then
+			-- sprite:crouch()
+			char:crouch()
+		elseif DB then
+			-- sprite:crouch()
+			char:crouch()
+		elseif B then
+			char:walk("B")
+		elseif UB then
+			-- sprite:init_jump("left")
+		elseif jabb then
+			-- jab(sprite, "standing")
+		else
+			char:set_state("idle")
+		end
+
+		-- ANIMATION
+		animation.loop(char)
+	elseif state == "crouch_intro" then
+
+		-- INPUTS
+		if U then
+			-- sprite:init_jump("neutral")
+		elseif UF then
+			-- sprite:init_jump("right")
+		elseif F then
+			char:walk("F")
+		elseif DF then
+			-- sprite:crouch()
+		elseif D then
+			-- char:crouch()
+		elseif DB then
+			-- sprite:crouch()
+		elseif B then
+			char:walk("B")
+			-- sprite:walk("left")
+		elseif UB then
+			-- sprite:init_jump("left")
+		elseif jabb then
+			-- jab(sprite, "standing")
+		else
+			char:stand()
+		end
+
+		-- ANIMATION
+		animation.loop(char)
+
+	elseif state == "crouch_loop" then
+
+		-- INPUTS
+		if U then
+			-- sprite:init_jump("neutral")
+		elseif UF then
+			-- sprite:init_jump("right")
+		elseif F then
+			char:walk("F")
+		elseif DF then
+			-- sprite:crouch()
+		elseif D then
+			-- char:crouch()
+		elseif DB then
+			-- sprite:crouch()
+		elseif B then
+			char:walk("B")
+			-- sprite:walk("left")
+		elseif UB then
+			-- sprite:init_jump("left")
+		elseif jabb then
+			-- jab(sprite, "standing")
+		else
+			char:stand()
+		end
+
+		-- ANIMATION
+		animation.loop(char)
+
+	elseif state == "crouch_outro" then
+
+		-- INPUTS
+		if U then
+			-- sprite:init_jump("neutral")
+		elseif UF then
+			-- sprite:init_jump("right")
+		elseif F then
+			-- char:walk("F")
+			char:walk("F")
+		elseif DF then
+			-- sprite:crouch()
+		elseif D then
+			char:crouch()
+		elseif DB then
+			-- sprite:crouch()
+		elseif B then
+			char:walk("B")
+			-- sprite:walk("left")
+		elseif UB then
+			-- sprite:init_jump("left")
+		elseif jabb then
+			-- jab(sprite, "standing")
 		end
 
 		-- ANIMATION
