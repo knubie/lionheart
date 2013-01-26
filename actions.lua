@@ -18,24 +18,15 @@ function update (char)
 	if state == "idle" then
 
 		-- INPUTS
-		if U then
-			-- sprite:init_jump("neutral")
-		elseif UF then
-			-- sprite:init_jump("right")
-		elseif F then
-			char:walk("F")
-		elseif DF then
-			char:crouch()
-		elseif D then
-			char:crouch()
-		elseif DB then
-			char:crouch()
-		elseif B then
-			char:walk("B")
+		if U then char:jump("N")
+		elseif UF then char:jump("F")
+		elseif F then char:walk("F")
+		elseif DF then char:crouch()
+		elseif D then char:crouch()
+		elseif DB then char:crouch()
+		elseif B then char:walk("B")
 		elseif UB then
-			-- sprite:init_jump("left")
 		elseif jabb then
-			-- jab(sprite, "standing")
 		end
 
 		char:animate()
@@ -43,27 +34,16 @@ function update (char)
 	elseif state == "walk_f" then
 
 		-- INPUTS
-		if U then
-			-- sprite:init_jump("neutral")
-		elseif UF then
-			-- sprite:init_jump("right")
-		elseif F then
-			char:walk("F")
-		elseif DF then
-			-- sprite:crouch()
-			char:crouch()
-		elseif D then
-			-- sprite:crouch()
-			char:crouch()
-		elseif DB then
-			-- sprite:crouch()
-			char:crouch()
-		elseif B then
-			char:walk("B")
+		if U then char:jump("N")
+		elseif UF then char:jump("F")
+		elseif F then char:walk("F")
+		elseif DF then char:crouch()
+		elseif D then char:crouch()
+		elseif DB then char:crouch()
+		elseif B then char:walk("B")
 		elseif UB then
-			-- sprite:init_jump("left")
 		elseif jabb then
-			-- jab(sprite, "standing")
+
 		else
 			char:set_state("idle")
 		end
@@ -73,29 +53,16 @@ function update (char)
 	elseif state == "walk_b" then
 
 		-- INPUTS
-		if U then
-			-- sprite:init_jump("neutral")
+		if U then char:jump("N")
 		elseif UF then
-			-- sprite:init_jump("right")
-		elseif F then
-			char:walk("F")
-		elseif DF then
-			-- sprite:crouch()
-			char:crouch()
-		elseif D then
-			-- sprite:crouch()
-			char:crouch()
-		elseif DB then
-			-- sprite:crouch()
-			char:crouch()
-		elseif B then
-			char:walk("B")
+		elseif F then char:walk("F")
+		elseif DF then char:crouch()
+		elseif D then char:crouch()
+		elseif DB then char:crouch()
+		elseif B then char:walk("B")
 		elseif UB then
-			-- sprite:init_jump("left")
 		elseif jabb then
-			-- jab(sprite, "standing")
-		else
-			char:set_state("idle")
+		else char:set_state("idle")
 		end
 
 		char:animate()
@@ -103,27 +70,16 @@ function update (char)
 	elseif state == "crouch_intro" then
 
 		-- INPUTS
-		if U then
-			-- sprite:init_jump("neutral")
-		elseif UF then
-			-- sprite:init_jump("right")
-		elseif F then
-			char:walk("F")
+		if U then char:jump("N")
+		elseif UF then char:jump("F")
+		elseif F then char:walk("F")
 		elseif DF then
-			-- sprite:crouch()
 		elseif D then
-			-- char:crouch()
 		elseif DB then
-			-- sprite:crouch()
-		elseif B then
-			char:walk("B")
-			-- sprite:walk("left")
+		elseif B then char:walk("B")
 		elseif UB then
-			-- sprite:init_jump("left")
 		elseif jabb then
-			-- jab(sprite, "standing")
-		else
-			char:stand()
+		else char:stand()
 		end
 
 		char:animate()
@@ -132,26 +88,15 @@ function update (char)
 
 		-- INPUTS
 		if U then
-			-- sprite:init_jump("neutral")
 		elseif UF then
-			-- sprite:init_jump("right")
-		elseif F then
-			char:walk("F")
+		elseif F then char:walk("F")
 		elseif DF then
-			-- sprite:crouch()
 		elseif D then
-			-- char:crouch()
 		elseif DB then
-			-- sprite:crouch()
-		elseif B then
-			char:walk("B")
-			-- sprite:walk("left")
+		elseif B then char:walk("B")
 		elseif UB then
-			-- sprite:init_jump("left")
 		elseif jabb then
-			-- jab(sprite, "standing")
-		else
-			char:stand()
+		else char:stand()
 		end
 
 		char:animate()
@@ -159,30 +104,52 @@ function update (char)
 	elseif state == "crouch_outro" then
 
 		-- INPUTS
-		if U then
-			-- sprite:init_jump("neutral")
-		elseif UF then
-			-- sprite:init_jump("right")
-		elseif F then
-			-- char:walk("F")
-			char:walk("F")
+		if U then char:jump("N")
+		elseif UF then char:jump("F")
+		elseif F then char:walk("F")
 		elseif DF then
-			-- sprite:crouch()
-		elseif D then
-			char:crouch()
+		elseif D then char:crouch()
 		elseif DB then
-			-- sprite:crouch()
-		elseif B then
-			char:walk("B")
-			-- sprite:walk("left")
+		elseif B then char:walk("B")
 		elseif UB then
-			-- sprite:init_jump("left")
 		elseif jabb then
-			-- jab(sprite, "standing")
+		else char:stand()
 		end
 
 		char:animate()
 
+	elseif state == "jump_neutral" then
+
+		-- INPUTS
+		if U then char:jump("N")
+		elseif UF then
+		elseif F then
+		elseif DF then
+		elseif D then
+		elseif DB then
+		elseif B then
+		elseif UB then
+		elseif jabb then
+		end
+
+		char:animate()
+
+	elseif state == "jump_forward" then
+
+		-- INPUTS
+		if U then char:jump("F")
+		elseif UF then char:jump("F")
+		elseif F then char:jump("F")
+		elseif DF then char:jump("F")
+		elseif D then char:jump("F")
+		elseif DB then char:jump("F")
+		elseif B then char:jump("F")
+		elseif UB then char:jump("F")
+		elseif jabb then char:jump("F")
+		else char:jump("F")
+		end
+
+		char:animate()
 	end
 
 end

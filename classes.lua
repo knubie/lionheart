@@ -26,9 +26,11 @@ Mob = Class:new{
 		if self.frame < state.img:getWidth() / state.w then
 			self.frame = self.frame + 1
 		else
-			if state.loop == true then
 				self.frame = 1
-			else
+			if state.loop == false then
+				if state.dx then
+					self.x = self.x + state.dx
+				end
 				self.currentState = state.next_state
 			end
 		end
@@ -117,6 +119,17 @@ Mob = Class:new{
 		end
 	end,
 
+	jump = function(self, direction)
+		if direction == "N" then
+			self:set_state("jump_neutral")
+			if self.currentState == "jump_neutral" and self.frame > 22 then
+				self.frame = 1
+			end
+		elseif direction == "F" then
+			self:set_state("jump_forward")
+		end
+	end,
+
 	update = function(self)
 		actions.update(self)
 	end
@@ -151,7 +164,7 @@ Ninja = Mob:new{
 		},
 		crouch_intro = {
 			img = love.graphics.newImage("assets/ibuki-crouch-intro.png"),
-			c = {x=69,y=101},
+			c = {x=67,y=101},
 			w = 110,
 			h = 101,
 			loop = false,
@@ -166,9 +179,26 @@ Ninja = Mob:new{
 		},
 		crouch_outro = {
 			img = love.graphics.newImage("assets/ibuki-crouch-outro.png"),
-			c = {x=69,y=101},
+			c = {x=67,y=101},
 			w = 110,
 			h = 101,
+			loop = false,
+			next_state = 'idle'
+		},
+		jump_neutral = {
+			img = love.graphics.newImage("assets/ibuki-jump.png"),
+			c = {x=63,y=101},
+			w = 111,
+			h = 258,
+			loop = false,
+			next_state = 'idle'
+		},
+		jump_forward = {
+			img = love.graphics.newImage("assets/ibuki-jump-forward.png"),
+			c = {x=57,y=101},
+			w = 275,
+			h = 216,
+			dx = 170,
 			loop = false,
 			next_state = 'idle'
 		}
