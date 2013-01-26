@@ -13,7 +13,7 @@ function update (char)
 	end
 
 	local class = char.class
-	local state = char.state
+	local state = char.currentState
 
 	if state == "idle" then
 
@@ -38,41 +38,9 @@ function update (char)
 			-- jab(sprite, "standing")
 		end
 
-		-- ANIMATION
-		animation.loop(char)
+		char:animate()
 
-	elseif char.state == "walk_f" then
-
-		-- INPUTS
-		if U then
-			-- sprite:init_jump("neutral")
-		elseif UF then
-			-- sprite:init_jump("right")
-		elseif F then
-			char:walk("F")
-		elseif DF then
-			-- sprite:crouch()
-			char:crouch()
-		elseif D then
-			-- sprite:crouch()
-			char:crouch()
-		elseif DB then
-			-- sprite:crouch()
-			char:crouch()
-		elseif B then
-			char:walk("B")
-		elseif UB then
-			-- sprite:init_jump("left")
-		elseif jabb then
-			-- jab(sprite, "standing")
-		else
-			char:set_state("idle")
-		end
-
-		-- ANIMATION
-		animation.loop(char)
-
-	elseif char.state == "walk_b" then
+	elseif state == "walk_f" then
 
 		-- INPUTS
 		if U then
@@ -100,8 +68,38 @@ function update (char)
 			char:set_state("idle")
 		end
 
-		-- ANIMATION
-		animation.loop(char)
+		char:animate()
+
+	elseif state == "walk_b" then
+
+		-- INPUTS
+		if U then
+			-- sprite:init_jump("neutral")
+		elseif UF then
+			-- sprite:init_jump("right")
+		elseif F then
+			char:walk("F")
+		elseif DF then
+			-- sprite:crouch()
+			char:crouch()
+		elseif D then
+			-- sprite:crouch()
+			char:crouch()
+		elseif DB then
+			-- sprite:crouch()
+			char:crouch()
+		elseif B then
+			char:walk("B")
+		elseif UB then
+			-- sprite:init_jump("left")
+		elseif jabb then
+			-- jab(sprite, "standing")
+		else
+			char:set_state("idle")
+		end
+
+		char:animate()
+
 	elseif state == "crouch_intro" then
 
 		-- INPUTS
@@ -128,8 +126,7 @@ function update (char)
 			char:stand()
 		end
 
-		-- ANIMATION
-		animation.loop(char)
+		char:animate()
 
 	elseif state == "crouch_loop" then
 
@@ -157,8 +154,7 @@ function update (char)
 			char:stand()
 		end
 
-		-- ANIMATION
-		animation.loop(char)
+		char:animate()
 
 	elseif state == "crouch_outro" then
 
@@ -185,8 +181,8 @@ function update (char)
 			-- jab(sprite, "standing")
 		end
 
-		-- ANIMATION
-		animation.loop(char)
+		char:animate()
+
 	end
 
 end

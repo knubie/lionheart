@@ -1,6 +1,6 @@
-require('char')
+require('classes')
 require('actions')
-require('races')
+-- require('races')
 
 function love.run()
 
@@ -69,25 +69,27 @@ function love.load()
 end
 
 function love.update(dt)
-	actions.update(char.p1)
+	-- actions.update(char.p1)
+	-- actions.update(characters.player1)
+	classes.player1:update()
 end
 
 function love.draw()
-	local bb1 = races.human.ibuki.walk_f.hb.bb1
-	local bb2 = races.human.ibuki.walk_f.hb.bb2
-	local bb3 = races.human.ibuki.walk_f.hb.bb3
+	-- local bb1 = races.human.ibuki.walk_f.hb.bb1
+	-- local bb2 = races.human.ibuki.walk_f.hb.bb2
+	-- local bb3 = races.human.ibuki.walk_f.hb.bb3
 
-	if char.p1.state == "walk_f" then
-		for bb = 1, table.getn(races.human.ibuki.walk_f.hb) do
-			love.graphics.rectangle("line",
-				races.human.ibuki.walk_f.hb[bb][char.p1.frame][1]+char.p1.x-char.p1.class[char.p1.state].c.x,
-				races.human.ibuki.walk_f.hb[bb][char.p1.frame][2]+650-char.p1.class[char.p1.state].h+char.p1.y,
-				races.human.ibuki.walk_f.hb[bb][char.p1.frame][3],
-				races.human.ibuki.walk_f.hb[bb][char.p1.frame][4])
-		end
-	end
+	-- if char.p1.state == "walk_f" then
+	-- 	for bb = 1, table.getn(races.human.ibuki.walk_f.hb) do
+	-- 		love.graphics.rectangle("line",
+	-- 			races.human.ibuki.walk_f.hb[bb][char.p1.frame][1]+char.p1.x-char.p1.class[char.p1.state].c.x,
+	-- 			races.human.ibuki.walk_f.hb[bb][char.p1.frame][2]+650-char.p1.class[char.p1.state].h+char.p1.y,
+	-- 			races.human.ibuki.walk_f.hb[bb][char.p1.frame][3],
+	-- 			races.human.ibuki.walk_f.hb[bb][char.p1.frame][4])
+	-- 	end
+	-- end
 
-	char.p1:draw()
+	classes.player1:draw()
 
 end
 

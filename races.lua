@@ -50,6 +50,13 @@ human = {
 			h = 101,
 			loop = false,
 			next_state = 'idle'
+		},
+		crouch_loop = {
+			img = love.graphics.newImage("assets/ibuki-crouch-loop.png"),
+			c = {x=43,y=65},
+			w = 84,
+			h = 65,
+			loop = true
 		}
 	}
 
