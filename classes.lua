@@ -1,7 +1,7 @@
 module(...,package.seeall)
 require('actions')
 
-GROUND = 650
+GROUND = 300
 
 Class = {
   new = function(self, o)
@@ -13,7 +13,6 @@ Class = {
 }
 
 Mob = Class:new{
-
   currentState = "idle", -- Current animation state
   frame = 1, -- Current animation frame
 
@@ -53,6 +52,10 @@ Mob = Class:new{
     else
       love.graphics.drawq(state.img, quad, self.x-state.c.x, GROUND-state.h+self.y)
     end
+
+    if self.projectile then
+      self.projectile:draw()
+    end
   end,
 
   movex = function(self, v)
@@ -73,6 +76,21 @@ Mob = Class:new{
     end
   end,
 
+  update = function(self)
+    actions.update(self)
+    self:animate()
+    if self.projectile then
+      self.projectile:animate()
+      if self.facing == "right" then
+        self.projectile:movex(self.projectile.velocity)
+      else
+        self.projectile:movex(-self.projectile.velocity)
+      end
+    end
+  end
+}
+
+Player = Mob:new{
   walk = function(self, direction)
     if direction == "F" then
       self:set_state("walk_f")
@@ -132,14 +150,25 @@ Mob = Class:new{
     elseif direction == "B" then
       self:set_state("jump_backward")
     end
-  end,
-
-  update = function(self)
-    actions.update(self)
   end
 }
 
-Ninja = Mob:new{
+Projectile = Mob:new()
+
+Fire = Projectile:new{
+  velocity = 6,
+  states = {
+    idle = {
+      img = love.graphics.newImage("assets/fire2.png"),
+      c = {x=11,y=6},
+      w = 14,
+      h = 10,
+      loop = true
+    }
+  }
+}
+
+Ninja = Player:new{
   attributes = {
     walkf_v = 4,
     walkb_v = -3,
@@ -219,7 +248,7 @@ Ninja = Mob:new{
   }
 }
 
-Monk = Mob:new{
+Monk = Player:new{
   attributes = {
     walkf_v = 4,
     walkb_v = -3,
@@ -242,10 +271,10 @@ Monk = Mob:new{
   }
 }
 
-Blm = Mob:new{
+Blm = Player:new{
   attributes = {
-    walkf_v = 4,
-    walkb_v = -3
+    walkf_v = 1,
+    walkb_v = -1
   },
   states = {
     idle = {
@@ -256,14 +285,14 @@ Blm = Mob:new{
       loop = true
     },
     walk_b = {
-      img = love.graphics.newImage("assets/blm_idle.png"),
+      img = love.graphics.newImage("assets/blm_walkf.png"),
       c = {x=12,y=29},
       w = 23,
       h = 29,
       loop = true
     },
     walk_f = {
-      img = love.graphics.newImage("assets/blm_idle.png"),
+      img = love.graphics.newImage("assets/blm_walkf.png"),
       c = {x=12,y=29},
       w = 23,
       h = 29,
@@ -272,7 +301,7 @@ Blm = Mob:new{
     cast = {
       img = love.graphics.newImage("assets/blm_cast.png"),
       c = {x=12,y=29},
-      w = 23,
+      w = 28,
       h = 29,
       loop = false,
       next_state = 'idle'
@@ -280,6 +309,12 @@ Blm = Mob:new{
   },
   cast = function (self)
     self:set_state("cast")
+    self.projectile = classes.Fire:new{
+      x = self.x - 20,
+      y = -4,
+      currentState = "idle",
+      facing = self.facing
+    }
   end
 }
 

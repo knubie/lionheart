@@ -2,7 +2,7 @@ module(...,package.seeall)
 require('classes')
 
 one = classes.Ninja:new{
-  x = 100,
+  x = 50,
   y = 0,
   controls = { -- Keyboard/joystick controls
     up = "up",
@@ -16,7 +16,7 @@ one = classes.Ninja:new{
 }
 
 two = classes.Blm:new{
-  x = 400,
+  x = 200,
   y = 0,
   controls = { -- Keyboard/joystick controls
     up = "w",
@@ -28,3 +28,10 @@ two = classes.Blm:new{
   currentState = "idle", -- Animation state
   facing = "left"
 }
+
+--fireball = classes.Fire:new{
+  --x = 170,
+  --y = -4,
+  --currentState = "idle",
+  --facing = "left"
+--}

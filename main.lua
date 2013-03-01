@@ -4,7 +4,7 @@ require('actions')
 
 function love.run()
 
-  local fps = 20
+  local fps = 10
 
   math.randomseed(os.time())
   math.random() math.random()
@@ -71,6 +71,7 @@ end
 function love.update(dt)
   player.one:update()
   player.two:update()
+  --player.fireball:animate()
 end
 
 function love.draw()
@@ -90,6 +91,7 @@ function love.draw()
 
   player.one:draw()
   player.two:draw()
+  --player.fireball:draw()
 
 end
 

@@ -28,8 +28,6 @@ function update (char)
     elseif CAST then char:cast()
     end
 
-    char:animate()
-
   elseif state == "walk_f" then
 
     -- INPUTS
@@ -47,8 +45,6 @@ function update (char)
       char:set_state("idle")
     end
 
-    char:animate()
-
   elseif state == "walk_b" then
 
     -- INPUTS
@@ -63,8 +59,6 @@ function update (char)
     elseif jabb then
     else char:set_state("idle")
     end
-
-    char:animate()
 
   elseif state == "crouch_intro" then
 
@@ -81,8 +75,6 @@ function update (char)
     else char:stand()
     end
 
-    char:animate()
-
   elseif state == "crouch_loop" then
 
     -- INPUTS
@@ -97,8 +89,6 @@ function update (char)
     elseif jabb then
     else char:stand()
     end
-
-    char:animate()
 
   elseif state == "crouch_outro" then
 
@@ -115,8 +105,6 @@ function update (char)
     else char:stand()
     end
 
-    char:animate()
-
   elseif state == "jump_neutral" then
 
     -- INPUTS
@@ -130,8 +118,6 @@ function update (char)
     elseif UB then
     elseif jabb then
     end
-
-    char:animate()
 
   elseif state == "jump_forward" then
 
@@ -148,8 +134,6 @@ function update (char)
     else char:jump("F")
     end
 
-    char:animate()
-
   elseif state == "jump_backward" then
 
     -- INPUTS
@@ -165,12 +149,8 @@ function update (char)
     else char:jump("B")
     end
 
-    char:animate()
-
   elseif state == "cast" then
     
-    char:animate()
-
   end
 
 end
