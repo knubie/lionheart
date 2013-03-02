@@ -4,7 +4,7 @@ require('actions')
 
 function love.run()
 
-  local fps = 10
+  local fps = 15
 
   math.randomseed(os.time())
   math.random() math.random()
@@ -75,6 +75,7 @@ function love.update(dt)
 end
 
 function love.draw()
+  --love.graphics.scale(2)
   -- local bb1 = races.human.ibuki.walk_f.hb.bb1
   -- local bb2 = races.human.ibuki.walk_f.hb.bb2
   -- local bb3 = races.human.ibuki.walk_f.hb.bb3

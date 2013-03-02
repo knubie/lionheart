@@ -310,8 +310,8 @@ Blm = Player:new{
   cast = function (self)
     self:set_state("cast")
     self.projectile = classes.Fire:new{
-      x = self.x - 20,
-      y = -4,
+      x = self.x - 10,
+      y = -6,
       currentState = "idle",
       facing = self.facing
     }
