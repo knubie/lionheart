@@ -1,7 +1,7 @@
 module(...,package.seeall)
 require('actions')
 
-GROUND = 300
+GROUND = 160
 
 Class = {
   new = function(self, o)
@@ -62,11 +62,15 @@ Mob = Class:new{
     -- Create local reference to the character state
     local state = self.states[self.currentState]
 
-    if self.x-state.c.x > 0 and self.x-state.c.x+state.w < GROUND then
-      if self.x-state.c.x+v > 0 and self.x-state.c.x+state.w+v < GROUND then
-        self.x = self.x+v
-      end
-    end
+    print('movex function')
+    self.x = self.x+v
+    --if self.x-state.c.x > 0 and self.x-state.c.x+state.w < GROUND then
+      --print('check1')
+      --if self.x-state.c.x+v > 0 and self.x-state.c.x+state.w+v < GROUND then
+        --print('check2')
+        --self.x = self.x+v
+      --end
+    --end
   end,
 
   set_state = function(self, state_name)
@@ -77,13 +81,15 @@ Mob = Class:new{
   end,
 
   update = function(self)
-    actions.update(self)
+    --actions.update(self)
+    self:listenForInput()
     self:animate()
     if self.projectile then
       self.projectile:animate()
       if self.facing == "right" then
         self.projectile:movex(self.projectile.velocity)
       else
+        print('move left')
         self.projectile:movex(-self.projectile.velocity)
       end
     end
@@ -91,6 +97,25 @@ Mob = Class:new{
 }
 
 Player = Mob:new{
+  listenForInput = function(self)
+    function love.keypressed(key)
+      if key == self.controls.cast then
+        print('cast')
+        self:cast()
+      end
+      if key == self.controls.up then
+        print('up')
+        self:jump('N')
+        --self:jump('N')
+        --if love.Keyboard.isDown(self.controls.right) then
+          --self:jump('F')
+        --else
+          --self:jump('N')
+        --end
+      end
+    end
+  end,
+
   walk = function(self, direction)
     if direction == "F" then
       self:set_state("walk_f")
@@ -142,9 +167,7 @@ Player = Mob:new{
   jump = function(self, direction)
     if direction == "N" then
       self:set_state("jump_neutral")
-      if self.frame > self.states[self.currentState].till_action then
-        self.frame = 1
-      end
+      self.frame = 1
     elseif direction == "F" then
       self:set_state("jump_forward")
     elseif direction == "B" then
@@ -298,6 +321,14 @@ Blm = Player:new{
       h = 29,
       loop = true
     },
+    jump_neutral = {
+      img = love.graphics.newImage("assets/blm_jump.png"),
+      c = {x=12,y=29},
+      w = 23,
+      h = 63,
+      loop = false,
+      next_state = 'idle'
+    },
     cast = {
       img = love.graphics.newImage("assets/blm_cast.png"),
       c = {x=12,y=29},
@@ -311,7 +342,7 @@ Blm = Player:new{
     self:set_state("cast")
     self.projectile = classes.Fire:new{
       x = self.x - 10,
-      y = -6,
+      y = -16,
       currentState = "idle",
       facing = self.facing
     }

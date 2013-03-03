@@ -1,9 +1,9 @@
 module(...,package.seeall)
 require('classes')
 
-one = classes.Ninja:new{
+one = classes.Blm:new{
   x = 50,
-  y = 0,
+  y = -10,
   controls = { -- Keyboard/joystick controls
     up = "up",
     down = "down",
@@ -17,7 +17,7 @@ one = classes.Ninja:new{
 
 two = classes.Blm:new{
   x = 200,
-  y = 0,
+  y = -10,
   controls = { -- Keyboard/joystick controls
     up = "w",
     down = "s",
